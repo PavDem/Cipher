@@ -7,7 +7,7 @@ import java.util.Base64;
 public class RandomKeyGenerator {
 
 
-    public static String getRandomKey(String instance) {
+    public static SecretKey getRandomKey(String instance) {
         try {
             KeyGenerator keyGenerator = KeyGenerator.getInstance(instance);
 
@@ -15,8 +15,7 @@ public class RandomKeyGenerator {
             int keyBitSize = 256;
             keyGenerator.init(keyBitSize, secureRandom);
 
-            SecretKey secretKey = keyGenerator.generateKey();
-            return new String(Base64.getEncoder().encodeToString(secretKey.getEncoded()));
+            return keyGenerator.generateKey();
 
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();

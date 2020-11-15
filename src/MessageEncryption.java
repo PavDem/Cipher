@@ -1,7 +1,9 @@
+import javax.crypto.SecretKey;
+
 public interface MessageEncryption {
 
-    String encryptMessage(String message, String secretKey);
-    String decryptMessage(String message, String secretKey);
+    String encryptMessage(String message, SecretKey secretKey);
+    String decryptMessage(String message, SecretKey secretKey);
     String getCipherType();
 
 }

@@ -6,8 +6,8 @@ import javax.crypto.SecretKey;
 public class AES implements MessageEncryption {
 
     @Override
-    public String encryptMessage(String message, String key) {
-        SecretKey secretKey = SecretKeyCreator.setKey(key, "AES");
+    public String encryptMessage(String message, SecretKey secretKey) {
+        //SecretKey secretKey = SecretKeyCreator.setKey(key, "AES");
         try {
 
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
@@ -20,8 +20,8 @@ public class AES implements MessageEncryption {
     }
 
     @Override
-    public String decryptMessage(String message, String key) {
-        SecretKey secretKey = SecretKeyCreator.setKey(key, "AES");
+    public String decryptMessage(String message, SecretKey secretKey) {
+        //SecretKey secretKey = SecretKeyCreator.setKey(key, "AES");
         try {
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
             cipher.init(Cipher.DECRYPT_MODE, secretKey);

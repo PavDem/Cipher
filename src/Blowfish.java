@@ -8,8 +8,7 @@ public class Blowfish implements MessageEncryption {
 
 
     @Override
-    public String encryptMessage(String message, String key) {
-        SecretKey secretKey = SecretKeyCreator.setKey(key, "Blowfish");
+    public String encryptMessage(String message, SecretKey secretKey) {
         try {
             Cipher cipher = Cipher.getInstance("Blowfish");
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
@@ -21,13 +20,12 @@ public class Blowfish implements MessageEncryption {
     }
 
     @Override
-    public String decryptMessage(String message, String key) {
-        SecretKey secretKey = SecretKeyCreator.setKey(key, "Blowfish");
+    public String decryptMessage(String message, SecretKey secretKey) {
         try {
             Cipher cipher = Cipher.getInstance("Blowfish");
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
             return new String(cipher.doFinal(Base64.getDecoder().decode(message.getBytes("UTF-8"))));
-        } catch (GeneralSecurityException | UnsupportedEncodingException e) {
+        } catch (GeneralSecurityException | UnsupportedEncodingException | IllegalArgumentException e) {
             e.printStackTrace();
             return null;
         }
