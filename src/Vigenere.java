@@ -1,6 +1,6 @@
 import javax.crypto.SecretKey;
 
-public class OCM implements MessageEncryption{
+public class Vigenere implements MessageEncryption{
     public static final int ENCRYPT = 1;
     public static final int DECRYPT = 2;
 

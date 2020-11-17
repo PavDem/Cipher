@@ -7,7 +7,7 @@ public class CipherFactory {
             case "blowfish":
                 return new Blowfish();
             case "ocm":
-                return new OCM();
+                return new Vigenere();
             default:
                 return new AES(); //aes by default
         }

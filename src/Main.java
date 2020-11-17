@@ -73,7 +73,7 @@ public class Main {
     public static void printer(String command) {
         switch (command) {
             case "first":
-                System.out.println("Possible ciphers - AES, Blowfish, OCM");
+                System.out.println("Possible ciphers - AES, Blowfish, Vigenere");
                 break;
             case "info":
                 System.out.printf("Cipher - %s\nKey - %s\nmessage - %s\n", cipher.getCipherType(), key, message);
