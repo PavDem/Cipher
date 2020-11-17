@@ -17,7 +17,7 @@ public class Main {
 
         boolean isFinished = false;
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        printer("info");
+        printer("first");
         printer("list");
         while (!isFinished) {
             try {
@@ -26,38 +26,42 @@ public class Main {
                     case "1":
                         //set encryption type, AES by default
                         cipher = CipherFactory.getCipherMethod(reader.readLine());
+                        printer("info");
                         break;
                     case "2":
                         //generate new key
                         secretKey = RandomKeyGenerator.getRandomKey(cipher.getCipherType());
                         key = secretKeyToString();
-                        System.out.println(key);
+                        printer("info");
                         break;
                     case "3":
                         key = reader.readLine();
                         secretKey = stringToSecretKey();
-                        System.out.println(key);
+                        printer("info");
                         break;
                     case "4":
                         //enter message
                         message = reader.readLine();
-                        System.out.println(message);
+                        printer("info");
                         break;
                     case "5":
                         //encrypt
                         message = cipher.encryptMessage(message, secretKey);
-                        System.out.println(message);
+                        printer("info");
                         break;
                     case "6":
                         //decrypt
                         message = cipher.decryptMessage(message, secretKey);
-                        System.out.println(message);
+                        printer("info");
                         break;
                     case "info":
                         printer("info");
                         break;
                     case "exit":
                         return;
+                    default:
+                        printer("list");
+                        break;
                 }
             } catch (NullPointerException e) {
                 e.printStackTrace();
@@ -68,6 +72,9 @@ public class Main {
 
     public static void printer(String command) {
         switch (command) {
+            case "first":
+                System.out.println("Possible ciphers - AES, Blowfish, OCM");
+                break;
             case "info":
                 System.out.printf("Cipher - %s\nKey - %s\nmessage - %s\n", cipher.getCipherType(), key, message);
                 break;

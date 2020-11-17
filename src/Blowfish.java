@@ -15,7 +15,7 @@ public class Blowfish implements MessageEncryption {
             return Base64.getEncoder().encodeToString(cipher.doFinal(message.getBytes("UTF-8")));
         } catch (GeneralSecurityException | UnsupportedEncodingException e) {
             e.printStackTrace();
-            return null;
+            return message;
         }
     }
 
@@ -27,7 +27,7 @@ public class Blowfish implements MessageEncryption {
             return new String(cipher.doFinal(Base64.getDecoder().decode(message.getBytes("UTF-8"))));
         } catch (GeneralSecurityException | UnsupportedEncodingException | IllegalArgumentException e) {
             e.printStackTrace();
-            return null;
+            return message;
         }
     }
 

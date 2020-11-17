@@ -6,8 +6,10 @@ public class CipherFactory {
                 return new AES();
             case "blowfish":
                 return new Blowfish();
+            case "ocm":
+                return new OCM();
+            default:
+                return new AES(); //aes by default
         }
-
-        return null;
     }
 }

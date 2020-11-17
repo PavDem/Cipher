@@ -7,7 +7,6 @@ public class AES implements MessageEncryption {
 
     @Override
     public String encryptMessage(String message, SecretKey secretKey) {
-        //SecretKey secretKey = SecretKeyCreator.setKey(key, "AES");
         try {
 
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
@@ -15,21 +14,20 @@ public class AES implements MessageEncryption {
             return Base64.getEncoder().encodeToString(cipher.doFinal(message.getBytes("UTF-8")));
         } catch (Exception e) {
             System.out.println("Error while encrypting: " + e.toString());
+            return message;
         }
-        return null;
     }
 
     @Override
     public String decryptMessage(String message, SecretKey secretKey) {
-        //SecretKey secretKey = SecretKeyCreator.setKey(key, "AES");
         try {
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
             return new String(cipher.doFinal(Base64.getDecoder().decode(message.getBytes("UTF-8"))));
         } catch (Exception e) {
             System.out.println("Error while decrypting: " + e.toString());
+            return message;
         }
-        return null;
     }
 
     @Override
