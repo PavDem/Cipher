@@ -15,12 +15,12 @@ public class AES extends AbstractJavaInnerCipher implements MessageEncryption {
 
     @Override
     public String encryptMessage(String message, String key) {
-        return test(Cipher.ENCRYPT_MODE, message, key);
+        return encrypt(message, key);
     }
 
     @Override
     public String decryptMessage(String message, String key) {
-        return test(Cipher.DECRYPT_MODE, message, key);
+        return decrypt(message, key);
     }
 
     @Override

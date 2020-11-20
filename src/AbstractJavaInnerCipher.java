@@ -17,21 +17,27 @@ public abstract class AbstractJavaInnerCipher {
     public AbstractJavaInnerCipher() {
     }
 
-    public String test(int mode, String message, String key) {
+    private byte[] test(int mode, String message, String key) {
+        byte[] result = null;
         try {
             byte[] decodedKey = Base64.getDecoder().decode(key);
             SecretKey secretKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, algorithm);
             Cipher cipher = Cipher.getInstance(instance);
             cipher.init(mode, secretKey);
-            message = Base64.getEncoder().encodeToString(cipher.doFinal(message.getBytes(charsetName)));
+            result = cipher.doFinal(message.getBytes(charsetName));
         } catch (Exception e) {
             System.out.println("Error while decrypting: " + e.toString());
+            e.printStackTrace();
         }
-        return message;
+        return result;
     }
 
     public String encrypt(String message, String key) {
+        return Base64.getEncoder().encodeToString(test(1, message, key));
+    }
 
+    public String decrypt(String message, String key) {
+        return new String(Base64.getDecoder().decode(test(1, message, key)));
     }
 
 }
