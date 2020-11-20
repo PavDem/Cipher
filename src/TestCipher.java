@@ -9,6 +9,11 @@ class TestCipher {
 // a cyclic manner until it's length isi'nt 
 // equal to the length of original text
     public static void main(String[] args) {
+        test1();
+        //test2();
+    }
+
+    public static void test1() {
         StringBuffer sb = new StringBuffer();
         sb.append(key);
 
@@ -41,6 +46,16 @@ class TestCipher {
             z += 'A';
             System.out.print(z);
         }
+    }
+
+    public static void test2() {
+        int a, b, c, d, e;
+        a = 'a';
+        b = 'b';
+        c = 'c';
+        d = 'd';
+        e = 'e';
+        System.out.printf("%s, %s, %s, %s, %s", a, b, c, d, e);
     }
 
 }

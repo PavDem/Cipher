@@ -11,17 +11,18 @@ public class Main {
     private static MessageEncryption cipher = CipherFactory.getCipherMethod("AES");
 
     private static final String commandList = "Command list: \n1 - Set cipher\n2 - Generate new key\n" +
-            "3 - Enter key\n4 - Enter message\n5 - Encrypt\n6 - Decrypt\ninfo\nExit\n";
+            "3 - Enter key\n4 - Enter message\n5 - Encrypt\n6 - Decrypt\ninfo\nexit\n";
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
 
         boolean isFinished = false;
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         printer("first");
         printer("list");
-        while (!isFinished) {
-            try {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
+            while (!isFinished) {
                 String command = reader.readLine();
+                if (command == null)
+                    break;
                 switch (command) {
                     case "1":
                         //set encryption type, AES by default
@@ -63,11 +64,11 @@ public class Main {
                         printer("list");
                         break;
                 }
-            } catch (NullPointerException e) {
-                e.printStackTrace();
+
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        reader.close();
     }
 
     public static void printer(String command) {
