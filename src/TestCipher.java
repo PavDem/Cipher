@@ -9,8 +9,32 @@ class TestCipher {
 // a cyclic manner until it's length isi'nt 
 // equal to the length of original text
     public static void main(String[] args) {
-        test1();
+        //test1();
         //test2();
+        test4();
+    }
+
+    public static void test4() {
+        String key = RandomKeyGenerator.getRandomKey("AES");
+        String plaintext = "Message it isMessage it isMessage it isMessage it isMessage it isMessage it isMessage it isMessage it isMessage it isMessage it isMessage it isMessage it isMessage it isMessage it isMessage it isMessage it isMessage it isMessage it isMessage it isMessage it isMessage it isMessage it isMessage it isMessage it isMessage it isMessage it isMessage it isMessage it is";
+        String cipherText = "";
+        for (int i = 0; i < plaintext.length(); i++) {
+            char c = plaintext.charAt(i);
+            int caesar = key.charAt(i % key.length()) - 32;
+            int sum = c - 32 + caesar;
+            cipherText += (char) (sum % 95 + 32);
+        }
+
+        String encoded = "";
+        System.out.println(cipherText);
+
+        for (int i = 0; i < cipherText.length(); i++) {
+            char c = cipherText.charAt(i);
+            int caesar = key.charAt(i % key.length()) - 32;
+            int sum = c - 32 + (95 - caesar);
+            encoded += (char) (sum % 95 + 32);
+        }
+        System.out.println(encoded);
     }
 
     public static void test1() {
