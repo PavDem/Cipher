@@ -8,26 +8,24 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Base64;
 
-public class Blowfish implements MessageEncryption {
+public class Blowfish extends AbstractJavaInnerCipher implements MessageEncryption {
 
+    private Blowfish(String charsetName, String instance, String algorithm) {
+        super(charsetName, instance, algorithm);
+    }
+
+    public Blowfish() {
+        this("UTF-8", "Blowfish", "Blowfish");
+    }
 
     @Override
     public String encryptMessage(String message, String key) {
-        try {
-            byte[] decodedKey = Base64.getDecoder().decode(key);
-            SecretKey secretKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "Blowfish");
-            Cipher cipher = Cipher.getInstance("Blowfish");
-            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-            return Base64.getEncoder().encodeToString(cipher.doFinal(message.getBytes("UTF-8")));
-        } catch (GeneralSecurityException | UnsupportedEncodingException e) {
-            e.printStackTrace();
-            return message;
-        }
+        return test(Cipher.ENCRYPT_MODE, message, key);
     }
 
     @Override
     public String decryptMessage(String message, String key) {
-        return RandomKeyGenerator.getRandomKey("Blowfish");
+        return test(Cipher.DECRYPT_MODE, message, key);
     }
 
     @Override
