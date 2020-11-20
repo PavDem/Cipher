@@ -17,14 +17,18 @@ public abstract class AbstractJavaInnerCipher {
     public AbstractJavaInnerCipher() {
     }
 
-    private byte[] test(int mode, String message, String key) {
-        byte[] result = null;
+    private String magic(int mode, String message, String key) {
+        String result = null;
         try {
             byte[] decodedKey = Base64.getDecoder().decode(key);
             SecretKey secretKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, algorithm);
             Cipher cipher = Cipher.getInstance(instance);
             cipher.init(mode, secretKey);
-            result = cipher.doFinal(message.getBytes(charsetName));
+            if (mode == 1) {
+                result = Base64.getEncoder().encodeToString(cipher.doFinal(message.getBytes(charsetName)));
+            } else {
+                result = new String(cipher.doFinal(Base64.getDecoder().decode(message.getBytes("UTF-8"))));
+            }
         } catch (Exception e) {
             System.out.println("Error while decrypting: " + e.toString());
             e.printStackTrace();
@@ -33,11 +37,11 @@ public abstract class AbstractJavaInnerCipher {
     }
 
     public String encrypt(String message, String key) {
-        return Base64.getEncoder().encodeToString(test(1, message, key));
+        return magic(1, message, key);
     }
 
     public String decrypt(String message, String key) {
-        return new String(Base64.getDecoder().decode(test(1, message, key)));
+        return magic(2, message, key);
     }
 
 }
