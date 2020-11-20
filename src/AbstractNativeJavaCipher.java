@@ -27,7 +27,7 @@ public abstract class AbstractNativeJavaCipher {
             if (mode == 1) {
                 result = Base64.getEncoder().encodeToString(cipher.doFinal(message.getBytes(charsetName)));
             } else {
-                result = new String(cipher.doFinal(Base64.getDecoder().decode(message.getBytes("UTF-8"))));
+                result = new String(cipher.doFinal(Base64.getDecoder().decode(message.getBytes(charsetName))));
             }
         } catch (Exception e) {
             System.out.println("Error while decrypting: " + e.toString());
