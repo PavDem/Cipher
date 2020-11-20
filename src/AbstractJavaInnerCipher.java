@@ -23,7 +23,7 @@ public abstract class AbstractJavaInnerCipher {
             SecretKey secretKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, algorithm);
             Cipher cipher = Cipher.getInstance(instance);
             cipher.init(mode, secretKey);
-            message = Base64.getEncoder().encodeToString(cipher.doFinal(message.getBytes("UTF-8")));
+            message = Base64.getEncoder().encodeToString(cipher.doFinal(message.getBytes(charsetName)));
         } catch (Exception e) {
             System.out.println("Error while decrypting: " + e.toString());
         }
