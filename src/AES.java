@@ -1,37 +1,31 @@
-import java.util.Base64;
+public class AES extends AbstractNativeJavaCipher implements MessageEncryption {
 
-import javax.crypto.Cipher;
-import javax.crypto.SecretKey;
+    private AES(String charsetName, String instance, String algorithm) {
+        super(charsetName, instance, algorithm);
+    }
 
-public class AES implements MessageEncryption {
-
-    @Override
-    public String encryptMessage(String message, SecretKey secretKey) {
-        try {
-
-            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-            return Base64.getEncoder().encodeToString(cipher.doFinal(message.getBytes("UTF-8")));
-        } catch (Exception e) {
-            System.out.println("Error while encrypting: " + e.toString());
-            return message;
-        }
+    public AES() {
+        this("UTF-8", "AES/ECB/PKCS5Padding", "AES");
     }
 
     @Override
-    public String decryptMessage(String message, SecretKey secretKey) {
-        try {
-            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
-            cipher.init(Cipher.DECRYPT_MODE, secretKey);
-            return new String(cipher.doFinal(Base64.getDecoder().decode(message.getBytes("UTF-8"))));
-        } catch (Exception e) {
-            System.out.println("Error while decrypting: " + e.toString());
-            return message;
-        }
+    public String encryptMessage(String message, String key) {
+        return encrypt(message, key);
+    }
+
+    @Override
+    public String decryptMessage(String message, String key) {
+        return decrypt(message, key);
     }
 
     @Override
     public String getCipherType() {
         return "AES";
     }
+
+    @Override
+    public String getRandomKey() {
+        return RandomKeyGenerator.getRandomKey("AES");
+    }
+
 }
