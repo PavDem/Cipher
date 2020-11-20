@@ -21,8 +21,6 @@ public class Main {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             while (!isFinished) {
                 String command = reader.readLine();
-                if (command == null)
-                    break;
                 switch (command) {
                     case "1":
                         //set encryption type, AES by default
