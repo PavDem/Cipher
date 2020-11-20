@@ -6,8 +6,8 @@ public class CipherFactory {
                 return new AES();
             case "blowfish":
                 return new Blowfish();
-            case "vigenere":
-                return new Vigenere();
+            case "evc":
+                return new EVC();
             default:
                 return new AES(); //aes by default
         }

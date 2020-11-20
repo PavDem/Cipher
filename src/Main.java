@@ -5,17 +5,17 @@ public class Main {
     private static String message = " ";
     private static MessageEncryption cipher = CipherFactory.getCipherType("AES");
 
-    private static final String commandList = "Command list: \n" +
-            "1 - Set cipher\n" +
-            "2 - Generate new key\n" +
-            "" +
-            "3 - Enter key\n" +
-            "4 - Enter message\n" +
-            "5 - Encrypt\n" +
-            "6 - Decrypt\n" +
-            "info\n" +
-            "list\n" +
-            "exit\n";
+    private static final String commandList =
+            "Command list: \n" +
+                    "1 - Set cipher\n" +
+                    "2 - Generate new key\n" +
+                    "3 - Enter key\n" +
+                    "4 - Enter message\n" +
+                    "5 - Encrypt\n" +
+                    "6 - Decrypt\n" +
+                    "info\n" +
+                    "list\n" +
+                    "exit\n";
 
     public static void main(String[] args) {
 
@@ -77,7 +77,7 @@ public class Main {
     public static void printer(String command) {
         switch (command) {
             case "first":
-                System.out.println("Possible ciphers - AES, Blowfish, Vigenere");
+                System.out.println("Possible ciphers - AES, Blowfish, EVC");
                 break;
             case "info":
                 System.out.printf("Cipher - %s\nKey - %s\nmessage - %s\n", cipher.getCipherType(), key, message);

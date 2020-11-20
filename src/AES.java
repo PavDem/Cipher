@@ -1,9 +1,4 @@
-import java.util.Base64;
-import javax.crypto.Cipher;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
-
-public class AES extends AbstractJavaInnerCipher implements MessageEncryption {
+public class AES extends AbstractNativeJavaCipher implements MessageEncryption {
 
     private AES(String charsetName, String instance, String algorithm) {
         super(charsetName, instance, algorithm);

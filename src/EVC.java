@@ -4,7 +4,9 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Base64;
 
-public class Vigenere implements MessageEncryption {
+
+//EVC - Extended vigenere cipher
+public class EVC implements MessageEncryption {
 
     //Extended vigenere cipher with all ascii symbols
 
@@ -40,7 +42,7 @@ public class Vigenere implements MessageEncryption {
 
     @Override
     public String getCipherType() {
-        return "Vigenere";
+        return "EVC";
     }
 
     @Override

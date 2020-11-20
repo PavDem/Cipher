@@ -3,18 +3,18 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Base64;
 
-public abstract class AbstractJavaInnerCipher {
+public abstract class AbstractNativeJavaCipher {
     private String charsetName;
     private String instance;
     private String algorithm;
 
-    public AbstractJavaInnerCipher(String charsetName, String instance, String algorithm) {
+    public AbstractNativeJavaCipher(String charsetName, String instance, String algorithm) {
         this.charsetName = charsetName;
         this.instance = instance;
         this.algorithm = algorithm;
     }
 
-    public AbstractJavaInnerCipher() {
+    public AbstractNativeJavaCipher() {
     }
 
     private String magic(int mode, String message, String key) {
