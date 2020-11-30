@@ -1,47 +1,37 @@
 import javax.crypto.Cipher;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
 public abstract class AbstractNativeJavaCipher {
-    private String charsetName;
-    private String instance;
-    private String algorithm;
+    private final String charsetName;
+    private final String algorithm;
+    private final Cipher cipher;
 
-    public AbstractNativeJavaCipher(String charsetName, String instance, String algorithm) {
+    public AbstractNativeJavaCipher(String charsetName, String instance, String algorithm)
+            throws NoSuchAlgorithmException, NoSuchPaddingException {
         this.charsetName = charsetName;
-        this.instance = instance;
         this.algorithm = algorithm;
+        cipher = Cipher.getInstance(instance);
     }
 
-    public AbstractNativeJavaCipher() {
+    public String encrypt(String message, String key) throws InvalidKeyException {
+        cipher.init(1, stringToSecretKey(key));
+        return cipher.doFinal(message);
     }
 
-    private String magic(int mode, String message, String key) {
-        String result = null;
-        try {
-            byte[] decodedKey = Base64.getDecoder().decode(key);
-            SecretKey secretKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, algorithm);
-            Cipher cipher = Cipher.getInstance(instance);
-            cipher.init(mode, secretKey);
-            if (mode == 1) {
-                result = Base64.getEncoder().encodeToString(cipher.doFinal(message.getBytes(charsetName)));
-            } else {
-                result = new String(cipher.doFinal(Base64.getDecoder().decode(message.getBytes(charsetName))));
-            }
-        } catch (Exception e) {
-            System.out.println("Error while decrypting: " + e.toString());
-            e.printStackTrace();
-        }
-        return result;
+    public String decrypt(String message, String key) throws InvalidKeyException {
+        cipher.init(2, stringToSecretKey(key));
+        return cipher.doFinal(message);
     }
 
-    public String encrypt(String message, String key) {
-        return magic(1, message, key);
+    //перекводим байты в сикретКей
+    private SecretKey stringToSecretKey(String key) {
+        byte[] decodedKey = Base64.getDecoder().decode(key);
+        SecretKey secretKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, algorithm);
+        return secretKey;
     }
-
-    public String decrypt(String message, String key) {
-        return magic(2, message, key);
-    }
-
 }

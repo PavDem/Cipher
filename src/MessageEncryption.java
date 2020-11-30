@@ -5,5 +5,4 @@ public interface MessageEncryption {
     String decryptMessage(String message, String key);
     String getCipherType();
     String getRandomKey();
-
 }
