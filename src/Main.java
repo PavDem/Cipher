@@ -1,8 +1,13 @@
+import javax.crypto.Cipher;
 import java.io.*;
 
 public class Main {
     private Message messageTest = new Message();
     private static final String intro = "";
+    private static MessageEncryption cipher = CipherFactory.getCipherType("AES");
+
+    private static String message = " ";
+    private static String key = " ";
 
 
     private static final String commandList =
@@ -18,13 +23,7 @@ public class Main {
                     "exit\n";
 
 
-    public static void main(String[] args) {
-
-
-        String key = " ";
-        MessageEncryption cipher = new AES();
-        String message = " ";
-
+    public static void main(String[] args) throws Exception {
         boolean isFinished = false;
         printer("first");
         printer("list");

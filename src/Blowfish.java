@@ -8,26 +8,26 @@ public class Blowfish extends NativeJavaCipher {
         super(charsetName, instance, algorithm);
     }
 
-    public Blowfish() {
+    public Blowfish() throws Exception{
         this("UTF-8", "Blowfish", "Blowfish");
     }
 
-    @Override
-    public String encryptMessage(String message, String key) {
+    //@Override
+    public String encryptMessage(String message, String key) throws Exception{
         return encryptMessage(message, key);
     }
 
-    @Override
-    public String decryptMessage(String message, String key) {
+    //@Override
+    public String decryptMessage(String message, String key) throws Exception{
         return decryptMessage(message, key);
     }
 
-    @Override
+    //@Override
     public String getCipherType() {
         return "Blowfish";
     }
 
-    @Override
+    //@Override
     public String getRandomKey() {
         return RandomKeyGenerator.getRandomKey("Blowfish");
     }

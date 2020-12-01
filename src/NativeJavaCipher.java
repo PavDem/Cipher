@@ -1,13 +1,11 @@
-import javax.crypto.Cipher;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.SecretKey;
+import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.stream.Stream;
 
-public abstract class NativeJavaCipher  {
+public class NativeJavaCipher {
     private final String charsetName;
     private final String algorithm;
     private final Cipher cipher;
@@ -25,13 +23,27 @@ public abstract class NativeJavaCipher  {
         return secretKey;
     }
 
-    public String encryptMessage(String message, String key) {
-            cipher.init(1, stringToSecretKey(key));
-            return cipher.doFinal(message);
+    private String byteToString(byte[] message) {
+        return Base64.getEncoder().encodeToString(message);
     }
 
-    public String decryptMessage(String message, String key) {
-        cipher.init(2, stringToSecretKey(key));
-        return cipher.doFinal(message);
+    private byte[] stringToByte(String message) {
+        return Base64.getDecoder().decode(message);
+    }
+
+    public String encrypt(String message, String secretKey)
+            throws  InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+        cipher.init(1, stringToSecretKey(secretKey));
+        byte[] bytes = stringToByte(message);
+        bytes = cipher.doFinal(bytes);
+        return byteToString(bytes);
+    }
+
+    public String decrypt(String message, String secretKey)
+            throws  InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+        cipher.init(2, stringToSecretKey(secretKey));
+        byte[] bytes = stringToByte(message);
+        bytes = cipher.doFinal(bytes);
+        return byteToString(bytes);
     }
 }
