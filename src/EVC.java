@@ -8,7 +8,7 @@ import java.util.Base64;
 //EVC - Extended vigenere cipher
 public class EVC implements MessageEncryption {
 
-    //Extended vigenere cipher with all ascii symbols
+    //Extended self made vigenere cipher with all ascii symbols
 
     @Override
     public String encryptMessage(String message, String key) {

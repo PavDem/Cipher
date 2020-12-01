@@ -1,4 +1,5 @@
 import javax.crypto.SecretKey;
+import java.security.GeneralSecurityException;
 
 public interface MessageEncryption {
     String encryptMessage(String message, String key);

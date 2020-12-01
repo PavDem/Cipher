@@ -1,8 +1,7 @@
 import javax.crypto.NoSuchPaddingException;
-import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
 
-public class Blowfish extends AbstractNativeJavaCipher implements MessageEncryption {
+public class Blowfish extends NativeJavaCipher {
 
     private Blowfish(String charsetName, String instance, String algorithm)
             throws NoSuchAlgorithmException, NoSuchPaddingException {
@@ -10,21 +9,17 @@ public class Blowfish extends AbstractNativeJavaCipher implements MessageEncrypt
     }
 
     public Blowfish() {
-        try {
-            this("UTF-8", "Blowfish", "Blowfish");
-        } catch (GeneralSecurityException e) {
-            
-        }
+        this("UTF-8", "Blowfish", "Blowfish");
     }
 
     @Override
     public String encryptMessage(String message, String key) {
-        return encrypt(message, key);
+        return encryptMessage(message, key);
     }
 
     @Override
     public String decryptMessage(String message, String key) {
-        return decrypt(message, key);
+        return decryptMessage(message, key);
     }
 
     @Override

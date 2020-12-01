@@ -1,4 +1,4 @@
-public class AES extends AbstractNativeJavaCipher implements MessageEncryption {
+public class AES extends NativeJavaCipher implements MessageEncryption {
 
     private AES(String charsetName, String instance, String algorithm) {
         super(charsetName, instance, algorithm);
@@ -10,12 +10,12 @@ public class AES extends AbstractNativeJavaCipher implements MessageEncryption {
 
     @Override
     public String encryptMessage(String message, String key) {
-        return encrypt(message, key);
+        return encryptMessage(message, key);
     }
 
     @Override
     public String decryptMessage(String message, String key) {
-        return decrypt(message, key);
+        return decryptMessage(message, key);
     }
 
     @Override
