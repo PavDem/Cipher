@@ -1,21 +1,23 @@
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.stream.Stream;
 
-public class NativeJavaCipher {
-    private final String charsetName;
+public class NativeJavaCipher implements MessageEncryption {
     private final String algorithm;
     private final Cipher cipher;
 
-    public NativeJavaCipher(String charsetName, String instance, String algorithm)
+    public NativeJavaCipher(String instance, String algorithm)
             throws NoSuchAlgorithmException, NoSuchPaddingException {
-        this.charsetName = charsetName;
         this.algorithm = algorithm;
         cipher = Cipher.getInstance(instance);
     }
+
+
 
     private SecretKey stringToSecretKey(String key) {
         byte[] decodedKey = Base64.getDecoder().decode(key);
@@ -23,27 +25,28 @@ public class NativeJavaCipher {
         return secretKey;
     }
 
-    private String byteToString(byte[] message) {
-        return Base64.getEncoder().encodeToString(message);
-    }
 
-    private byte[] stringToByte(String message) {
-        return Base64.getDecoder().decode(message);
-    }
-
-    public String encrypt(String message, String secretKey)
-            throws  InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+    @Override
+    public String encryptMessage(String message, String secretKey)
+            throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         cipher.init(1, stringToSecretKey(secretKey));
-        byte[] bytes = stringToByte(message);
-        bytes = cipher.doFinal(bytes);
-        return byteToString(bytes);
+        return Base64.getEncoder().encodeToString(cipher.doFinal(message.getBytes(StandardCharsets.UTF_8)));
     }
 
-    public String decrypt(String message, String secretKey)
-            throws  InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+    @Override
+    public String decryptMessage(String message, String secretKey)
+            throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         cipher.init(2, stringToSecretKey(secretKey));
-        byte[] bytes = stringToByte(message);
-        bytes = cipher.doFinal(bytes);
-        return byteToString(bytes);
+        return new String(cipher.doFinal(Base64.getDecoder().decode(message.getBytes(StandardCharsets.UTF_8))));
+    }
+
+    @Override
+    public String getCipherType() {
+        return algorithm;
+    }
+
+    @Override
+    public String getRandomKey() {
+        return RandomKeyGenerator.getRandomKey(algorithm);
     }
 }
