@@ -1,11 +1,8 @@
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
+import cipher.MessageEncryption;
+
 import java.io.*;
-import java.security.InvalidKeyException;
 
 public class Main {
-    private Message messageTest = new Message();
     private static final String intro = "";
     private static MessageEncryption cipher = CipherFactory.getCipherType("AES");
 
@@ -30,11 +27,12 @@ public class Main {
         printer("list");
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             while (!isFinished) {
+                printer(">>");
                 String command = reader.readLine();
                 switch (command) {
                     case "1":
                         printer(">>");
-                        //set encryption type, AES by default
+                        //set encryption type, cipher.AES by default
                         cipher = CipherFactory.getCipherType(reader.readLine());
                         printer("info");
                         break;
@@ -77,8 +75,6 @@ public class Main {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
-            e.printStackTrace();
         }
     }
 
@@ -88,7 +84,7 @@ public class Main {
                 System.out.print(">>");
                 break;
             case "first":
-                System.out.println("Possible ciphers - AES, Blowfish, EVC");
+                System.out.println("Possible ciphers - cipher.AES, cipher.Blowfish, cipher.EVC");
                 break;
             case "info":
                 System.out.printf("Cipher - %s\nKey - %s\nmessage - %s\n", cipher.getCipherType(), key, message);

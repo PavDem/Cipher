@@ -1,11 +1,9 @@
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.util.Base64;
+package cipher;
+
+import cipher.MessageEncryption;
 
 
-//EVC - Extended vigenere cipher
+//cipher.EVC - Extended vigenere cipher
 public class EVC implements MessageEncryption {
 
     //Extended self made vigenere cipher with all ascii symbols
