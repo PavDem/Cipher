@@ -5,7 +5,6 @@ import java.io.*;
 import java.util.Optional;
 
 public class Main {
-    private static final String intro = "";
     private static MessageEncryption cipher = CipherFactory.getCipherType("AES");
     private static String message = " ";
     private static String key = " ";
