@@ -12,6 +12,7 @@ import java.util.Base64;
 public abstract class NativeJavaCipher implements MessageEncryption {
     private final String algorithm;
     private final Cipher cipher;
+    private static ExceptionHandler exceptionHandler = new ExceptionHandler();
 
     public NativeJavaCipher(String instance, String algorithm)
             throws NoSuchAlgorithmException, NoSuchPaddingException {
@@ -33,14 +34,8 @@ public abstract class NativeJavaCipher implements MessageEncryption {
             cipher.init(Cipher.ENCRYPT_MODE, stringToSecretKey(secretKey));
             byte[] encrypted = cipher.doFinal(message.getBytes(StandardCharsets.UTF_8));
             return Base64.getEncoder().encodeToString(encrypted);
-        } catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
-            e.printStackTrace();
-            System.out.println(e.toString());
-            return message;
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-            System.out.println("Key or message is not set");
-            return message;
+        } catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException | IllegalArgumentException e) {
+            return exceptionHandler.nativeJavaCipherHandler(e, message);
         }
     }
 
@@ -51,15 +46,10 @@ public abstract class NativeJavaCipher implements MessageEncryption {
             byte[] decoded = Base64.getDecoder().decode(message.getBytes(StandardCharsets.UTF_8));
             byte[] decrypted = cipher.doFinal(decoded);
             return new String(decrypted);
-        } catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
-            e.printStackTrace();
-            System.out.println(e.toString());
-            return message;
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-            System.out.println("Key or message is not set");
-            return message;
+        } catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException | IllegalArgumentException e) {
+            return exceptionHandler.nativeJavaCipherHandler(e, message);
         }
+
     }
 
     @Override

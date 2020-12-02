@@ -1,5 +1,7 @@
 import cipher.*;
 
+import java.util.Optional;
+
 public class CipherFactory {
 
     public static MessageEncryption getCipherType(String type) {
@@ -12,7 +14,6 @@ public class CipherFactory {
                 return new EVC();
             default:
                 throw new CipherDoesNotExist();
-                //default sipher
         }
     }
 }

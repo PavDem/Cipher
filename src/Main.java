@@ -1,11 +1,12 @@
+import cipher.CipherDoesNotExist;
 import cipher.MessageEncryption;
 
 import java.io.*;
+import java.util.Optional;
 
 public class Main {
     private static final String intro = "";
     private static MessageEncryption cipher = CipherFactory.getCipherType("AES");
-
     private static String message = " ";
     private static String key = " ";
     private static final String commandList =
@@ -27,13 +28,17 @@ public class Main {
         printer("list");
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             while (!isFinished) {
-                printer(">>");
+                System.out.print(">");
                 String command = reader.readLine();
                 switch (command) {
                     case "1":
                         printer(">>");
                         //set encryption type, cipher.AES by default
-                        cipher = CipherFactory.getCipherType(reader.readLine());
+                        try {
+                            cipher = CipherFactory.getCipherType(reader.readLine());
+                        } catch (CipherDoesNotExist e) {
+                            System.out.println("Entered cipher doesn't exist");
+                        }
                         printer("info");
                         break;
                     case "2":
