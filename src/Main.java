@@ -89,7 +89,7 @@ public class Main {
                 System.out.print(">>");
                 break;
             case "first":
-                System.out.println("Possible ciphers - cipher.AES, cipher.Blowfish, cipher.EVC");
+                System.out.println("Possible ciphers - AES, Blowfish, EVC");
                 break;
             case "info":
                 System.out.printf("Cipher - %s\nKey - %s\nmessage - %s\n", cipher.getCipherType(), key, message);
