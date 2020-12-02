@@ -24,6 +24,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         boolean isFinished = false;
         printer("first");
+        printer("info");
         printer("list");
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             while (!isFinished) {
