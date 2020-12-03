@@ -4,16 +4,16 @@ import java.util.Optional;
 
 public class CipherFactory {
 
-    public static MessageEncryption getCipherType(String type) {
+    public Optional<MessageEncryption> getCipherType(String type) {
         switch (type.toLowerCase().trim()) {
             case "aes":
-                return AES.create();
+                return Optional.of(AES.create());
             case "blowfish":
-                return Blowfish.create();
+                return Optional.of(Blowfish.create());
             case "evc":
-                return new EVC();
+                return Optional.of(new EVC());
             default:
-                throw new CipherDoesNotExist();
+                return Optional.empty();
         }
     }
 }

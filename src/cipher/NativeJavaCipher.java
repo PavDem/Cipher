@@ -1,7 +1,5 @@
 package cipher;
 
-import cipher.MessageEncryption;
-
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
@@ -35,7 +33,7 @@ public abstract class NativeJavaCipher implements MessageEncryption {
             byte[] encrypted = cipher.doFinal(message.getBytes(StandardCharsets.UTF_8));
             return Base64.getEncoder().encodeToString(encrypted);
         } catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException | IllegalArgumentException e) {
-            return exceptionHandler.nativeJavaCipherHandler(e, message);
+            return exceptionHandler.illegalArgumentAndSecurityHandler(e, message);
         }
     }
 
@@ -47,7 +45,7 @@ public abstract class NativeJavaCipher implements MessageEncryption {
             byte[] decrypted = cipher.doFinal(decoded);
             return new String(decrypted);
         } catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException | IllegalArgumentException e) {
-            return exceptionHandler.nativeJavaCipherHandler(e, message);
+            return exceptionHandler.illegalArgumentAndSecurityHandler(e, message);
         }
 
     }
@@ -59,6 +57,11 @@ public abstract class NativeJavaCipher implements MessageEncryption {
 
     @Override
     public String getRandomKey() {
-        return RandomKeyGenerator.getRandomKey(algorithm);
+        try {
+            return RandomKeyGenerator.getRandomKey(algorithm);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
     }
 }

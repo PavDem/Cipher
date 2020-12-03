@@ -12,7 +12,8 @@ public interface MessageEncryption {
 
     String decryptMessage(String message, String key);
 
+    String getRandomKey();
+
     String getCipherType();
 
-    String getRandomKey();
 }

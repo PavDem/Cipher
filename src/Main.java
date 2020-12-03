@@ -1,11 +1,11 @@
-import cipher.CipherDoesNotExist;
 import cipher.MessageEncryption;
 
 import java.io.*;
 import java.util.Optional;
 
 public class Main {
-    private static MessageEncryption cipher = CipherFactory.getCipherType("AES");
+    private static final CipherFactory cipherFactory = new CipherFactory();
+    private static MessageEncryption cipher = cipherFactory.getCipherType("AES").get();
     private static String message = " ";
     private static String key = " ";
     private static final String commandList =
@@ -21,7 +21,8 @@ public class Main {
                     "exit\n";
 
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
+
         boolean isFinished = false;
         printer("first");
         printer("info");
@@ -33,12 +34,8 @@ public class Main {
                 switch (command) {
                     case "1":
                         printer(">>");
-                        //set encryption type, cipher.AES by default
-                        try {
-                            cipher = CipherFactory.getCipherType(reader.readLine());
-                        } catch (CipherDoesNotExist e) {
-                            System.out.println("Entered cipher doesn't exist");
-                        }
+                        //using optional in case of wrong nae
+                        cipher = cipherFactory.getCipherType(reader.readLine()).orElse(cipher);
                         printer("info");
                         break;
                     case "2":
@@ -100,6 +97,8 @@ public class Main {
             case "exit":
                 System.out.println("Shutting down...");
                 break;
+            case "cipher":
+                System.out.println("Cipher does not exist");
         }
     }
 }
