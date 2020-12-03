@@ -1,14 +1,16 @@
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
+package cipher;
+
+import cipher.MessageEncryption;
+
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.util.Base64;
 
 
-//EVC - Extended vigenere cipher
+//cipher.EVC - Extended vigenere cipher
 public class EVC implements MessageEncryption {
 
-    //Extended vigenere cipher with all ascii symbols
+    private static ExceptionHandler exceptionHandler = new ExceptionHandler();
+
+    //Extended self made vigenere cipher with all ascii symbols
 
     @Override
     public String encryptMessage(String message, String key) {
@@ -47,6 +49,11 @@ public class EVC implements MessageEncryption {
 
     @Override
     public String getRandomKey() {
-        return RandomKeyGenerator.getRandomKey("AES");
+        try {
+            return RandomKeyGenerator.getRandomKey("AES");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
     }
 }

@@ -1,15 +1,19 @@
+import cipher.*;
+
+import java.util.Optional;
+
 public class CipherFactory {
 
-    public static MessageEncryption getCipherType(String type) {
+    public Optional<MessageEncryption> getCipherType(String type) {
         switch (type.toLowerCase().trim()) {
             case "aes":
-                return new AES();
+                return Optional.of(AES.create());
             case "blowfish":
-                return new Blowfish();
+                return Optional.of(Blowfish.create());
             case "evc":
-                return new EVC();
+                return Optional.of(new EVC());
             default:
-                return new AES(); //aes by default
+                return Optional.empty();
         }
     }
 }
